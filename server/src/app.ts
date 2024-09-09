@@ -17,7 +17,7 @@ app.use(express.json());
 app.set('trust proxy', 1);
 
 app.use(cors({
-    origin: ["http://localhost:5023", "https://seal-app-a7lmw.ondigitalocean.app", "https://gold-t693d.ondigitalocean.app", "https://server-node-test-zeta.vercel.app", "https://team-gold-crowdfunding-blockchain-server.vercel.app"],
+    origin: ["http://localhost:5023", "https://server-node-test-zeta.vercel.app", "https://team-gold-crowdfunding-blockchain-server.vercel.app", "https://team-gold-crowdfunding-blockchain.netlify.app"],
     credentials: true, // This is important for cookies/sessions
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
