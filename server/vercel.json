@@ -1,22 +1,23 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "src/server.ts",
-        "use": "@vercel/node",
-        "config": {
-            "includeFiles": "dist/**"
-          }
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/server.ts",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "src/**/*.ts",
+          "src/types/session.d.ts",
+          "package.json",
+          "tsconfig.json"
+        ]
       }
-    ],
-    "routes": [
-      {
-        "src": "/api/(.*)",
-        "dest": "/dist/routes/users.ts"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/"
-      }
-    ]
-  }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "src/server.ts"
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 import { RequestHandler } from "express";
 import createHttpError from "http-errors";
-import UserModel from "../models/user";
 import bcrypt from "bcrypt";
+
+import UserModel from "../models/user";
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
     try {
@@ -13,7 +14,7 @@ export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
     }
 };
 
-interface SignUpBody{
+interface SignUpBody {
     username?: string;
     email?: string;
     password?: string;

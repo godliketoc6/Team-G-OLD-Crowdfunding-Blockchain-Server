@@ -2,9 +2,9 @@ import "dotenv/config"
 import express, { NextFunction, Request, Response } from "express";
 import userRoutes from "./routes/users";
 import morgan from "morgan";
-import createHttpError, {isHttpError} from "http-errors";
+import createHttpError, { isHttpError } from "http-errors";
 import session from "express-session";
-import env from"./util/validateEnv";
+import env from "./util/validateEnv";
 import MongoStore from "connect-mongo";
 import cors from "cors";
 
@@ -14,9 +14,12 @@ app.use(morgan("dev"));
 
 app.use(express.json());
 
+app.set('trust proxy', 1);
+
 app.use(cors({
-    origin: "http://localhost:5173", // or your frontend URL
+    origin: ["http://localhost:5023", "https://seal-app-a7lmw.ondigitalocean.app", "https://gold-t693d.ondigitalocean.app", "https://server-node-test-zeta.vercel.app"],
     credentials: true, // This is important for cookies/sessions
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
 
 app.use(session({
@@ -25,6 +28,9 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         maxAge: 60 * 60 * 1000,
+        sameSite: 'none',
+        secure: true,
+        httpOnly: true,
     },
     rolling: true,
     store: MongoStore.create({
@@ -42,11 +48,11 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
     console.error(error);
     let errorMessage = "An unknown error occurred";
     let statusCode = 500;
-    if(isHttpError(error)) {
+    if (isHttpError(error)) {
         statusCode = error.status;
         errorMessage = error.message;
     }
-    res.status(statusCode).json({message: errorMessage});
+    res.status(statusCode).json({ message: errorMessage });
 })
 
 export default app;
